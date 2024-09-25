@@ -3,6 +3,7 @@
 rain module
 """
 
+
 def rain(walls):
     """
     Calculates the amount of rainwater retained between walls.
@@ -36,4 +37,3 @@ def rain(walls):
         water_retained += max(0, min(left_max[i], right_max[i]) - walls[i])
 
     return water_retained
-
