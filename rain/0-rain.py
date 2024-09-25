@@ -3,6 +3,7 @@
 Calculates how much rain will be trapped after it rains.
 """
 
+
 def rain(walls):
     """
     Calculates how much rain will be trapped after it rains.
