@@ -1,39 +1,35 @@
 #!/usr/bin/python3
 """
-rain module
+This module provides a function to calculate the amount of water trapped after it rains.
 """
 
-
-def rain(walls):
+def calculate_water_trap(elevations):
     """
-    Calculates the amount of rainwater retained between walls.
+    Given a list of wall heights (elevations), calculate how much water is trapped after rainfall.
     
     Args:
-        walls (list of int): List of non-negative integers representing wall heights.
+        elevations (list of int): List representing wall heights.
     
     Returns:
-        int: Total amount of rainwater retained.
+        int: The total amount of trapped water.
     """
-    if not walls or len(walls) < 3:
+    if not elevations or len(elevations) < 3:
         return 0
 
-    n = len(walls)
-    left_max = [0] * n
-    right_max = [0] * n
-    water_retained = 0
+    total_water = 0
 
-    # Fill left_max
-    left_max[0] = walls[0]
-    for i in range(1, n):
-        left_max[i] = max(left_max[i - 1], walls[i])
+    for idx in range(1, len(elevations) - 1):
+        # Maximum height to the left of the current wall
+        max_left = max(elevations[:idx])
+        # Maximum height to the right of the current wall
+        max_right = max(elevations[idx + 1:])
 
-    # Fill right_max
-    right_max[n - 1] = walls[n - 1]
-    for i in range(n - 2, -1, -1):
-        right_max[i] = max(right_max[i + 1], walls[i])
+        # Calculate the possible water level above the current wall
+        water_level = min(max_left, max_right)
 
-    # Calculate water retained
-    for i in range(1, n - 1):
-        water_retained += max(0, min(left_max[i], right_max[i]) - walls[i])
+        # Water is only trapped if the current wall is lower than the water level
+        if elevations[idx] < water_level:
+            total_water += water_level - elevations[idx]
 
-    return water_retained
+    return total_water
+
